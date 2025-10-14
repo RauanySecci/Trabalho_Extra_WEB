@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil do Cliente</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <div style="text-align: right; padding: 10px;">
+        <button id="logoutButton">Sair</button>
+    </div>
+    <div class="container">
+        <h1>Perfil do Cliente</h1>
+        <p>Complete seu cadastro para continuar.</p>
+        <form id="client-form">
+            <div class="form-group">
+                <label for="name">Nome Completo:</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="form-group">
+                <label for="document">Documento (CPF):</label>
+                <input type="text" id="document" name="document" required>
+            </div>
+            <button type="submit">Salvar Perfil</button>
+        </form>
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('authToken');
+        // Se não houver token, volta para a tela de login
+        if (!token) {
+            window.location.href = '/login.html';
+        }
+
+        document.getElementById('logoutButton').addEventListener('click', function() {
+            localStorage.removeItem('authToken');
+            window.location.href = '/login.html';
+        });
+
+        document.getElementById('client-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const messageDiv = document.getElementById('message');
+            const clientData = { name: form.name.value, document: form.document.value };
+
+            try {
+                const response = await fetch('/clients', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}` // Envia o token para autorização
+                    },
+                    body: JSON.stringify(clientData)
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || 'Não foi possível salvar o perfil.');
+                
+                messageDiv.textContent = `Perfil salvo com sucesso! ID do Cliente: ${result.id}`;
+                messageDiv.className = 'message success';
+                // Aqui você pode redirecionar para a página de pets
+                // window.location.href = '/pet.html';
+            } catch (error) {
+                messageDiv.textContent = `Erro: ${error.message}`;
+                messageDiv.className = 'message error';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Crie sua Conta</title>
+    <link rel="stylesheet" href="/styles/style.css"> </head>
+<body>
+    <div class="container">
+        <h1>Crie sua Conta de Acesso</h1>
+        <form id="signup-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Registrar</button>
+        </form>
+        <div id="message" class="message"></div>
+        <div class="login-link">
+            <p>Já tem uma conta? <a href="/login.html">Faça login</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const messageDiv = document.getElementById('message');
+            const userData = { email: form.email.value, password: form.password.value };
+
+            try {
+                const response = await fetch('/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(userData)
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || 'Erro no registro.');
+                
+                messageDiv.textContent = 'Conta criada com sucesso! Agora você pode fazer login.';
+                messageDiv.className = 'message success';
+                form.reset();
+            } catch (error) {
+                messageDiv.textContent = `Erro: ${error.message}`;
+                messageDiv.className = 'message error';
+            }
+        });
+    </script>
+</body>
+</html>

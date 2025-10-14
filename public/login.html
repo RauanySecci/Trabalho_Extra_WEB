@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Login</h1>
+        <form id="login-form">
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Senha:</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit">Entrar</button>
+        </form>
+        <div id="message" class="message"></div>
+        <div class="login-link">
+            <p>Não tem uma conta? <a href="/signup.html">Cadastre-se</a></p>
+        </div>
+    </div>
+    <script>
+        document.getElementById('login-form').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const form = event.target;
+            const messageDiv = document.getElementById('message');
+            const loginData = { email: form.email.value, password: form.password.value };
+
+            try {
+                const response = await fetch('/signin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(loginData)
+                });
+                const result = await response.json();
+                if (!response.ok) throw new Error(result.message || 'Credenciais inválidas.');
+                
+                // Salva o token e redireciona
+                localStorage.setItem('authToken', result.token);
+                window.location.href = '/clientes.html'; // Redireciona para completar o perfil
+            } catch (error) {
+                messageDiv.textContent = `Erro: ${error.message}`;
+                messageDiv.className = 'message error';
+            }
+        });
+    </script>
+</body>
+</html>

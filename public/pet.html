@@ -43,36 +43,51 @@
     <p id="response"></p>
   </form>
 
-  <script>
-    document.getElementById('petForm').addEventListener('submit', async (e) => {
-      e.preventDefault()
+<script>
+    document.getElementById('petForm').addEventListener('submit', async function(event) {
+        event.preventDefault();
 
-      const form = e.target
-      const formData = new FormData(form)
+        const form = event.target;
+        const responseParagraph = document.getElementById('response');
 
-      const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjYsImVtYWlsIjoibWFyaWEyMDAwQGptYWlsLmNvbSIsImlhdCI6MTc1OTcxNDMwMCwiZXhwIjoxNzYyMzA2MzAwfQ.Efz_miyNvBzn2v1m9Fr-3XqT4n6-DB2fK3vbiG5DbrI";
+        // 1. Pega o token salvo no navegador durante o login
+        const token = localStorage.getItem('authToken');
 
-      try {
-        const response = await fetch('/pets', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: formData
-        })
-
-        if (!response.ok) {
-          throw new Error('Erro ao enviar os dados: ' + response.status)
+        // 2. Verifica se o usuário está logado (se o token existe)
+        if (!token) {
+            responseParagraph.textContent = '❌ Erro: Você precisa fazer login para cadastrar um pet.';
+            // Opcional: redireciona para a página de login
+            // window.location.href = '/login.html';
+            return;
         }
 
-        const result = await response.json()
-        document.getElementById('response').textContent =
-          '✅ Enviado com sucesso!\n\n' + JSON.stringify(result, null, 2)
-      } catch (error) {
-        document.getElementById('response').textContent =
-          '❌ Erro: ' + error.message
-      }
-    })
-  </script>
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch('http://localhost:3000/pets', {
+                method: 'POST',
+                headers: {
+                    // 3. Usa o token dinâmico na requisição
+                    'Authorization': `Bearer ${token}`
+                },
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                // Usa a mensagem de erro vinda do servidor, se houver
+                const errorMessage = result.message || `Erro ao enviar os dados: ${response.status}`;
+                throw new Error(errorMessage);
+            }
+
+            responseParagraph.textContent = '✅ Enviado com sucesso!\n\n' + JSON.stringify(result, null, 2);
+            form.reset(); // Limpa o formulário após o sucesso
+
+        } catch (error) {
+            responseParagraph.textContent = '❌ Erro: ' + error.message;
+        }
+    });
+</script>
 </body>
 </html>
