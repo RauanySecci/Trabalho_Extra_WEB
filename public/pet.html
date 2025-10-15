@@ -13,7 +13,6 @@
     <h1>Cadastro de Pet</h1>
 
     <form id="petForm" enctype="multipart/form-data" autocomplete="off">
-      <!-- 1) Seleção do cliente do BD -->
       <div class="form-group">
         <label for="ClientId">Cliente:</label>
         <select id="ClientId" name="ClientId" required>
@@ -22,8 +21,6 @@
         </select>
         <small id="clientInfo" style="display:block;margin-top:6px;color:#666;"></small>
       </div>
-
-      <!-- 2) Campos do PET (desabilitados até escolher um cliente) -->
       <div class="form-group">
         <label for="name">Nome:</label>
         <input id="name" type="text" name="name" required disabled />

@@ -1,5 +1,3 @@
-// auth.js – versão com tratamento de erros melhorado
-
 document.addEventListener('DOMContentLoaded', () => {
   const loginForm  = document.getElementById('login-form');
   const signupForm = document.getElementById('signup-form');
@@ -8,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (signupForm) handleSignup(signupForm);
 });
 
-// ===== Utilidades comuns =====
 const REQUEST_TIMEOUT_MS = 12000;
 
 function ensureMessageDiv() {
@@ -25,7 +22,7 @@ function ensureMessageDiv() {
 function showMessage(text, type = 'error') {
   const el = ensureMessageDiv();
   el.textContent = text;
-  el.className = `message ${type}`; // usa .message.success / .message.error do seu CSS
+  el.className = `message ${type}`; 
   el.style.display = 'block';
 }
 
@@ -47,12 +44,10 @@ async function safeParseJSON(res) {
 function buildBackendErrorText(payload, fallback = 'Erro ao processar a solicitação.') {
   if (!payload || typeof payload !== 'object') return fallback;
 
-  // 1) message (string)
   if (typeof payload.message === 'string' && payload.message.trim()) {
     return payload.message;
   }
 
-  // 2) Arrays comuns: errors / issues / details / fieldErrors
   const arrays = [payload.errors, payload.issues, payload.details, payload.fieldErrors];
   for (const arr of arrays) {
     if (Array.isArray(arr) && arr.length) {
@@ -65,7 +60,6 @@ function buildBackendErrorText(payload, fallback = 'Erro ao processar a solicita
     }
   }
 
-  // 3) Sequelize unique
   if (payload.name === 'SequelizeUniqueConstraintError' && Array.isArray(payload.errors)) {
     return payload.errors.map(e => e.message || `${e.path} já existe`).join('\n');
   }
@@ -123,12 +117,11 @@ async function fetchWithHandling(url, options = {}) {
   }
 }
 
-// ===== Fluxo de Login =====
 function handleLogin(form) {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();
     setLoading(form, true);
-    showMessage('', 'error'); // limpa mensagens (mantém bloco visível, se quiser)
+    showMessage('', 'error'); // limpa mensagens 
 
     const email = form.querySelector('#email')?.value?.trim();
     const password = form.querySelector('#password')?.value || '';
@@ -158,7 +151,6 @@ function handleLogin(form) {
   });
 }
 
-// ===== Fluxo de Cadastro =====
 function handleSignup(form) {
   form.addEventListener('submit', async (event) => {
     event.preventDefault();

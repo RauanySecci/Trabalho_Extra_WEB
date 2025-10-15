@@ -1,22 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
-/* ================================================
-   NOVA PALETA DE CORES APLICADA
-   ================================================
-*/
+
 :root {
-    /* Cores da nova paleta */
     --primary-orange: #f28c48;
     --fresh-green: #9ac556;
     --sunny-yellow: #ffdc4a;
     --light-yellow: #ffeb9a;
     --soft-peach: #ffe8c8;
-
-    /* Cores de suporte */
     --white: #ffffff;
-    --dark-text: #4a4a4a; /* Um cinza escuro para texto, mais suave que o preto */
+    --dark-text: #4a4a4a; 
 }
-/* ================================================ */
 
 body {
     font-family: 'Poppins', sans-serif;
@@ -26,12 +19,8 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-
     background-color: #fefcf9;
-    
-
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 320'%3E%3Cpath fill='%239ac556' fill-opacity='0.5' d='M0,128L80,149.3C160,171,320,213,480,213.3C640,213,800,171,960,138.7C1120,107,1280,85,1360,74.7L1440,64L1440,320L1360,320C1280,320,1120,320,960,320C800,320,640,320,480,320C320,320,160,320,80,320L0,320Z'%3E%3C/path%3E%3Cpath fill='%23ffeb9a' fill-opacity='0.6' d='M0,224L48,202.7C96,181,192,139,288,133.3C384,128,480,160,576,186.7C672,213,768,235,864,218.7C960,203,1056,149,1152,117.3C1248,85,1344,75,1392,69.3L1440,64L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z'%3E%3C/path%3E%3C/svg%3E");
-    
     background-repeat: no-repeat;
     background-position: bottom;
     background-size: cover;
@@ -48,13 +37,11 @@ body {
     text-align: center;
     z-index: 10;
     border: 1px solid rgba(255, 255, 255, 0.3);
-    /* Detalhe no topo usando o laranja principal */
     border-top: 6px solid var(--primary-orange);
 }
 
 h1 {
-    /* Usando a fonte Barlow para o título, como na referência */
-    font-family: 'Barlow', sans-serif; /* Você pode adicionar o @import do Google Fonts se quiser */
+    font-family: 'Barlow', sans-serif; 
     color: var(--primary-orange);
     margin-bottom: 1.5rem;
     font-weight: 700;
@@ -82,7 +69,6 @@ input[type="date"] {
 }
 
 input:focus {
-    /* Destaque usando a cor verde */
     border-color: var(--fresh-green);
     box-shadow: 0 0 0 3px rgba(154, 197, 86, 0.4);
     outline: none;
@@ -91,7 +77,6 @@ input:focus {
 button {
     width: 100%;
     padding: 0.7rem;
-    /* Botão principal com a cor laranja */
     background-color: var(--primary-orange);
     color: var(--white);
     border: none;
@@ -101,11 +86,9 @@ button {
     cursor: pointer;
     transition: all 0.2s ease-in-out;
     margin-top: 1.5rem; 
-
 }
 
 button:hover {
-    /* Um tom um pouco mais escuro do laranja para o efeito hover */
     background-color: #e07b3a;
     transform: translateY(-3px);
     box-shadow: 0 4px 10px rgba(0,0,0,0.15);
@@ -122,18 +105,16 @@ button:hover {
 .error { display: block; color: #721c24; background-color: #f8d7da; }
 
 .link-container {
-
     font-size: 0.9rem;
 }
 
 .link-container a {
-    /* Link de cadastro/login usando o verde */
     color: var(--fresh-green);
     text-decoration: none;
     font-weight: bold;
 }
 
 .logo {
-    width: 300px; /* Define uma largura máxima para o logo */
-    margin-bottom: 1rem; /* Adiciona um espaço abaixo dele */
+    width: 300px; 
+    margin-bottom: 1rem; 
 }

@@ -1,12 +1,9 @@
-/* ===== Altura dinâmica da navbar (definida via JS) ===== */
 :root { --navbar-h: 80px; }
 
-/* ===== Body com padding conforme altura da navbar ===== */
 body {
   padding-top: var(--navbar-h, 80px);
 }
 
-/* ===== Navbar base (desktop) ===== */
 .navbar {
   position: fixed;
   inset: 0 0 auto 0;        /* top:0; left:0; right:0 */
@@ -16,7 +13,7 @@ body {
   display: flex;
   align-items: center;
   gap: 20px;
-  padding: 0.75rem 1rem;     /* respira bem e cabe no mobile */
+  padding: 0.75rem 1rem;    
   box-shadow: 0 2px 5px rgba(0,0,0,.2);
   box-sizing: border-box;
   z-index: 1000;
@@ -34,7 +31,6 @@ body {
 
 .navbar-logo{ height: 40px; margin-right: 10px; }
 
-/* Links desktop */
 .navbar-links{
   list-style: none;
   display: flex;
@@ -60,7 +56,6 @@ body {
   color: var(--dark-text);
 }
 
-/* Empurra logout para a direita no desktop */
 .navbar-logout{ margin-left: auto; }
 
 #logoutButton{
@@ -75,7 +70,6 @@ body {
 }
 #logoutButton:hover{ filter: brightness(1.03); }
 
-/* ===== Botão hamburger (aparece só no mobile) ===== */
 .navbar-burger{
   display: none;             /* desktop: escondido */
   margin-left: auto;         /* empurra pra direita quando links somem */
@@ -93,9 +87,7 @@ body {
   border-radius: 2px;
 }
 
-/* ====== MOBILE ====== */
 @media (max-width: 840px){
-  /* Esconde links e coloca como dropdown abaixo da navbar */
   .navbar{ padding: 0.5rem 0.75rem; }
 
   .navbar-links{
@@ -111,7 +103,6 @@ body {
   }
   .navbar-links a{ width: 100%; }
 
-  /* No mobile, o botão sair vira parte do dropdown */
   .navbar-logout{ margin-left: 0; }
 
   .navbar.is-open .navbar-links{
@@ -121,7 +112,6 @@ body {
   .navbar-burger{ display: inline-block; }
 }
 
-/* (opcional) Melhor foco/acessibilidade */
 #logoutButton:focus-visible,
 .navbar-burger:focus-visible,
 .navbar-links a:focus-visible{

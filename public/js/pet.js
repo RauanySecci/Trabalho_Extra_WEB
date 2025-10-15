@@ -6,7 +6,6 @@
     return;
   }
 
-  // refs
   const form = document.getElementById("petForm");
   const responseEl = document.getElementById("response");
   const clientSelect = document.getElementById("ClientId");
@@ -33,7 +32,6 @@
     submitBtn.disabled = !enabled;
   }
 
-  // máscara simples para CPF visual
   const maskCPF = (digits) => {
     const v = String(digits || "").replace(/\D/g, "").slice(0,11);
     if (v.length <= 3) return v;
@@ -42,7 +40,6 @@
     return v.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/, "$1.$2.$3-$4");
   };
 
-  // 1) Carregar clientes do BD e popular o select
   async function carregarClientes() {
     try {
       const res = await fetch("/clients", {
@@ -51,7 +48,6 @@
       if (!res.ok) throw new Error(`Erro ao carregar clientes (${res.status})`);
 
       const data = await res.json();
-      // aceita array direto ou {items:[...]}
       const list = Array.isArray(data) ? data : (data.items || []);
       if (!Array.isArray(list) || list.length === 0) {
         clientInfo.textContent = "Nenhum cliente encontrado. Cadastre um cliente primeiro.";
@@ -59,9 +55,7 @@
         return;
       }
 
-      // popular opções
       for (const c of list) {
-        // esperamos { id, name, document }
         const opt = document.createElement("option");
         opt.value = c.id;
         opt.textContent = `${c.name} — ${maskCPF(c.document)}`;
@@ -76,7 +70,6 @@
     }
   }
 
-  // 2) Habilitar campos ao escolher um cliente válido
   clientSelect.addEventListener("change", () => {
     const id = clientSelect.value;
     if (id) {
@@ -89,7 +82,6 @@
     }
   });
 
-  // 3) Preview da imagem
   photoInput.addEventListener("change", () => {
     photoPreview.innerHTML = "";
     const file = photoInput.files?.[0];
@@ -103,7 +95,6 @@
     photoPreview.appendChild(img);
   });
 
-  // 4) Submit
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     if (!clientSelect.value) {
@@ -137,7 +128,6 @@
     }
   });
 
-  // 5) Navbar: logout quando botão aparecer (navbar é injetada)
   const obs = new MutationObserver(() => {
     const logout = document.getElementById("logoutButton");
     if (logout) {
