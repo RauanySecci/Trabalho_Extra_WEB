@@ -1,0 +1,132 @@
+/* ===== Altura dinâmica da navbar (definida via JS) ===== */
+:root { --navbar-h: 80px; }
+
+/* ===== Body com padding conforme altura da navbar ===== */
+body {
+  padding-top: var(--navbar-h, 80px);
+}
+
+/* ===== Navbar base (desktop) ===== */
+.navbar {
+  position: fixed;
+  inset: 0 0 auto 0;        /* top:0; left:0; right:0 */
+  width: 100%;
+  background-color: var(--primary-orange);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0.75rem 1rem;     /* respira bem e cabe no mobile */
+  box-shadow: 0 2px 5px rgba(0,0,0,.2);
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.navbar-brand a{
+  color: var(--white);
+  text-decoration: none;
+  font-size: 1.35rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.navbar-logo{ height: 40px; margin-right: 10px; }
+
+/* Links desktop */
+.navbar-links{
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 0 0 0 1rem;
+  padding: 0;
+}
+
+.navbar-links li{ margin: 0; }
+
+.navbar-links a{
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 700;
+  padding: 10px 12px;
+  border-radius: 8px;
+  transition: background-color .2s;
+  white-space: nowrap;
+}
+.navbar-links a:hover{
+  background-color: var(--soft-peach);
+  color: var(--dark-text);
+}
+
+/* Empurra logout para a direita no desktop */
+.navbar-logout{ margin-left: auto; }
+
+#logoutButton{
+  background-color: var(--soft-peach);
+  color: var(--dark-text);
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  transition: filter .2s, transform .06s;
+}
+#logoutButton:hover{ filter: brightness(1.03); }
+
+/* ===== Botão hamburger (aparece só no mobile) ===== */
+.navbar-burger{
+  display: none;             /* desktop: escondido */
+  margin-left: auto;         /* empurra pra direita quando links somem */
+  width: 40px; height: 40px;
+  border: 1.5px solid rgba(255,255,255,.85);
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.navbar-burger .bar{
+  display: block;
+  width: 20px; height: 2px;
+  background: #fff;
+  margin: 4px auto;
+  border-radius: 2px;
+}
+
+/* ====== MOBILE ====== */
+@media (max-width: 840px){
+  /* Esconde links e coloca como dropdown abaixo da navbar */
+  .navbar{ padding: 0.5rem 0.75rem; }
+
+  .navbar-links{
+    position: fixed;
+    top: var(--navbar-h, 64px);
+    left: 0; right: 0;
+    display: none;                 /* fechado por padrão */
+    flex-direction: column;
+    gap: 8px;
+    padding: 10px 12px;
+    background: color-mix(in srgb, var(--primary-orange) 92%, #000 8%);
+    border-top: 1px solid rgba(255,255,255,.25);
+  }
+  .navbar-links a{ width: 100%; }
+
+  /* No mobile, o botão sair vira parte do dropdown */
+  .navbar-logout{ margin-left: 0; }
+
+  .navbar.is-open .navbar-links{
+    display: flex;                 /* abre o menu */
+  }
+
+  .navbar-burger{ display: inline-block; }
+}
+
+/* (opcional) Melhor foco/acessibilidade */
+#logoutButton:focus-visible,
+.navbar-burger:focus-visible,
+.navbar-links a:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255,255,255,.35),
+              0 0 0 6px rgba(0,0,0,.12);
+  border-radius: 10px;
+}
